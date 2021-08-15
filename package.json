@@ -1,6 +1,6 @@
 {
   "name": "nwm",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -9,8 +9,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "commit":"git-cz",
-    "release":"standard-version",
+    "commit": "git-cz",
+    "release": "standard-version",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",
