@@ -21,7 +21,7 @@
               "apps/currency-converter/src/favicon.ico",
               "apps/currency-converter/src/assets"
             ],
-            "styles": ["apps/currency-converter/src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/purple-green.css", "apps/currency-converter/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
