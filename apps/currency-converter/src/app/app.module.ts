@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,6 +21,16 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
+  {
+    path: 'history',
+    loadChildren: () =>
+      import('./history/history.module').then((m) => m.HistoryModule),
+  },
+  {
+    path: 'exchange',
+    loadChildren: () =>
+      import('./exchange/exchange.module').then((m) => m.ExchangeModule),
+  },
 ];
 
 @NgModule({
@@ -36,6 +47,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MaterialModule,
     FlexLayoutModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
