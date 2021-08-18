@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/DuncanFaulkner/currencyConverter/compare/v0.0.2...v0.0.3) (2021-08-18)
+
+
+### Features
+
+* 🎸 add convert currency page and selectors ([102b124](https://github.com/DuncanFaulkner/currencyConverter/commit/102b1247f45fb9f6eafbfa688d01d519a7519013))
+
 ### [0.0.2](https://github.com/DuncanFaulkner/currencyConverter/compare/v0.0.1...v0.0.2) (2021-08-16)
 
 
