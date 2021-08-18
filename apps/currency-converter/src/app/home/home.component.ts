@@ -13,24 +13,22 @@ import { ExchangeRatesService } from '../services/exchange-rates.service';
 export class HomeComponent implements OnInit, OnDestroy {
   exchangeRate!: ExchangeRate;
   rates!: Rates;
+  baseTime!: Date;
 
   constructor(private exchangeRateService: ExchangeRatesService) {}
   private unsubscribe$: Subject<void> = new Subject<void>();
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    this.exchangeRateService.histricalRates
+    this.exchangeRateService.historicalRates
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (data: ExchangeRate) => {
           this.exchangeRate = data;
+          this.baseTime = new Date(this.exchangeRate.timestamp * 1000);
           this.rates = data.rates;
           console.log(this.rates);
         },
       });
-    // this.rates.subscribe((data) => {
-    //   console.log(data[0]?.rates);
-    // });
   }
 
   ngOnDestroy = () => {

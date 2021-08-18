@@ -1,15 +1,210 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatSelect } from '@angular/material/select';
+import { Subject } from 'rxjs';
+import { ExchangeRatesService } from '../services/exchange-rates.service';
 
+interface Country {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'nwm-exchange',
   templateUrl: './exchange.component.html',
-  styleUrls: ['./exchange.component.scss']
+  styleUrls: ['./exchange.component.scss'],
 })
-export class ExchangeComponent implements OnInit {
+export class ExchangeComponent {
+  from = '';
+  to = '';
+  amount = 0;
 
-  constructor() { }
+  countries: Country[] = [
+    { value: 'AED', viewValue: 'AED' },
+    { value: 'AFN', viewValue: 'AFN' },
+    { value: 'ALL', viewValue: 'ALL' },
+    { value: 'AMD', viewValue: 'AMD' },
+    { value: 'ANG', viewValue: 'ANG' },
+    { value: 'AOA', viewValue: 'AOA' },
+    { value: 'ARS', viewValue: 'ARS' },
+    { value: 'AUD', viewValue: 'AUD' },
+    { value: 'AWG', viewValue: 'AWG' },
+    { value: 'AZN', viewValue: 'AZN' },
+    { value: 'BAM', viewValue: 'BAM' },
+    { value: 'BBD', viewValue: 'BBD' },
+    { value: 'BDT', viewValue: 'BDT' },
+    { value: 'BGN', viewValue: 'BGN' },
+    { value: 'BHD', viewValue: 'BHD' },
+    { value: 'BIF', viewValue: 'BIF' },
+    { value: 'BMD', viewValue: 'BMD' },
+    { value: 'BND', viewValue: 'BND' },
+    { value: 'BOB', viewValue: 'BOB' },
+    { value: 'BRL', viewValue: 'BRL' },
+    { value: 'BSD', viewValue: 'BSD' },
+    { value: 'BTC', viewValue: 'BTC' },
+    { value: 'BTN', viewValue: 'BTN' },
+    { value: 'BWP', viewValue: 'BWP' },
+    { value: 'BYN', viewValue: 'BYN' },
+    { value: 'BYR', viewValue: 'BYR' },
+    { value: 'BZD', viewValue: 'BZD' },
+    { value: 'CAD', viewValue: 'CAD' },
+    { value: 'CDF', viewValue: 'CDF' },
+    { value: 'CHF', viewValue: 'CHF' },
+    { value: 'CLF', viewValue: 'CLF' },
+    { value: 'CLP', viewValue: 'CLP' },
+    { value: 'CNY', viewValue: 'CNY' },
+    { value: 'COP', viewValue: 'COP' },
+    { value: 'CRC', viewValue: 'CRC' },
+    { value: 'CUC', viewValue: 'CUC' },
+    { value: 'CUP', viewValue: 'CUP' },
+    { value: 'CVE', viewValue: 'CVE' },
+    { value: 'CZK', viewValue: 'CZK' },
+    { value: 'DJF', viewValue: 'DJF' },
+    { value: 'DKK', viewValue: 'DKK' },
+    { value: 'DOP', viewValue: 'DOP' },
+    { value: 'DZD', viewValue: 'DZD' },
+    { value: 'EGP', viewValue: 'EGP' },
+    { value: 'ERN', viewValue: 'ERN' },
+    { value: 'ETB', viewValue: 'ETB' },
+    { value: 'EUR', viewValue: 'EUR' },
+    { value: 'FJD', viewValue: 'FJD' },
+    { value: 'FKP', viewValue: 'FKP' },
+    { value: 'GBP', viewValue: 'GBP' },
+    { value: 'GEL', viewValue: 'GEL' },
+    { value: 'GGP', viewValue: 'GGP' },
+    { value: 'GHS', viewValue: 'GHS' },
+    { value: 'GIP', viewValue: 'GIP' },
+    { value: 'GMD', viewValue: 'GMD' },
+    { value: 'GNF', viewValue: 'GNF' },
+    { value: 'GTQ', viewValue: 'GTQ' },
+    { value: 'GYD', viewValue: 'GYD' },
+    { value: 'HKD', viewValue: 'HKD' },
+    { value: 'HNL', viewValue: 'HNL' },
+    { value: 'HRK', viewValue: 'HRK' },
+    { value: 'HTG', viewValue: 'HTG' },
+    { value: 'HUF', viewValue: 'HUF' },
+    { value: 'IDR', viewValue: 'IDR' },
+    { value: 'ILS', viewValue: 'ILS' },
+    { value: 'IMP', viewValue: 'IMP' },
+    { value: 'INR', viewValue: 'INR' },
+    { value: 'IQD', viewValue: 'IQD' },
+    { value: 'IRR', viewValue: 'IRR' },
+    { value: 'ISK', viewValue: 'ISK' },
+    { value: 'JEP', viewValue: 'JEP' },
+    { value: 'JMD', viewValue: 'JMD' },
+    { value: 'JOD', viewValue: 'JOD' },
+    { value: 'JPY', viewValue: 'JPY' },
+    { value: 'KES', viewValue: 'KES' },
+    { value: 'KGS', viewValue: 'KGS' },
+    { value: 'KHR', viewValue: 'KHR' },
+    { value: 'KMF', viewValue: 'KMF' },
+    { value: 'KPW', viewValue: 'KPW' },
+    { value: 'KRW', viewValue: 'KRW' },
+    { value: 'KWD', viewValue: 'KWD' },
+    { value: 'KYD', viewValue: 'KYD' },
+    { value: 'KZT', viewValue: 'KZT' },
+    { value: 'LAK', viewValue: 'LAK' },
+    { value: 'LBP', viewValue: 'LBP' },
+    { value: 'LKR', viewValue: 'LKR' },
+    { value: 'LRD', viewValue: 'LRD' },
+    { value: 'LSL', viewValue: 'LSL' },
+    { value: 'LTL', viewValue: 'LTL' },
+    { value: 'LVL', viewValue: 'LVL' },
+    { value: 'LYD', viewValue: 'LYD' },
+    { value: 'MAD', viewValue: 'MAD' },
+    { value: 'MDL', viewValue: 'MDL' },
+    { value: 'MGA', viewValue: 'MGA' },
+    { value: 'MKD', viewValue: 'MKD' },
+    { value: 'MMK', viewValue: 'MMK' },
+    { value: 'MNT', viewValue: 'MNT' },
+    { value: 'MOP', viewValue: 'MOP' },
+    { value: 'MRO', viewValue: 'MRO' },
+    { value: 'MUR', viewValue: 'MUR' },
+    { value: 'MVR', viewValue: 'MVR' },
+    { value: 'MWK', viewValue: 'MWK' },
+    { value: 'MXN', viewValue: 'MXN' },
+    { value: 'MYR', viewValue: 'MYR' },
+    { value: 'MZN', viewValue: 'MZN' },
+    { value: 'NAD', viewValue: 'NAD' },
+    { value: 'NGN', viewValue: 'NGN' },
+    { value: 'NIO', viewValue: 'NIO' },
+    { value: 'NOK', viewValue: 'NOK' },
+    { value: 'NPR', viewValue: 'NPR' },
+    { value: 'NZD', viewValue: 'NZD' },
+    { value: 'OMR', viewValue: 'OMR' },
+    { value: 'PAB', viewValue: 'PAB' },
+    { value: 'PEN', viewValue: 'PEN' },
+    { value: 'PGK', viewValue: 'PGK' },
+    { value: 'PHP', viewValue: 'PHP' },
+    { value: 'PKR', viewValue: 'PKR' },
+    { value: 'PLN', viewValue: 'PLN' },
+    { value: 'PYG', viewValue: 'PYG' },
+    { value: 'QAR', viewValue: 'QAR' },
+    { value: 'RON', viewValue: 'RON' },
+    { value: 'RSD', viewValue: 'RSD' },
+    { value: 'RUB', viewValue: 'RUB' },
+    { value: 'RWF', viewValue: 'RWF' },
+    { value: 'SAR', viewValue: 'SAR' },
+    { value: 'SBD', viewValue: 'SBD' },
+    { value: 'SCR', viewValue: 'SCR' },
+    { value: 'SDG', viewValue: 'SDG' },
+    { value: 'SEK', viewValue: 'SEK' },
+    { value: 'SGD', viewValue: 'SGD' },
+    { value: 'SHP', viewValue: 'SHP' },
+    { value: 'SLL', viewValue: 'SLL' },
+    { value: 'SOS', viewValue: 'SOS' },
+    { value: 'SRD', viewValue: 'SRD' },
+    { value: 'STD', viewValue: 'STD' },
+    { value: 'SVC', viewValue: 'SVC' },
+    { value: 'SYP', viewValue: 'SYP' },
+    { value: 'SZL', viewValue: 'SZL' },
+    { value: 'THB', viewValue: 'THB' },
+    { value: 'TJS', viewValue: 'TJS' },
+    { value: 'TMT', viewValue: 'TMT' },
+    { value: 'TND', viewValue: 'TND' },
+    { value: 'TOP', viewValue: 'TOP' },
+    { value: 'TRY', viewValue: 'TRY' },
+    { value: 'TTD', viewValue: 'TTD' },
+    { value: 'TWD', viewValue: 'TWD' },
+    { value: 'TZS', viewValue: 'TZS' },
+    { value: 'UAH', viewValue: 'UAH' },
+    { value: 'UGX', viewValue: 'UGX' },
+    { value: 'USD', viewValue: 'USD' },
+    { value: 'UYU', viewValue: 'UYU' },
+    { value: 'UZS', viewValue: 'UZS' },
+    { value: 'VEF', viewValue: 'VEF' },
+    { value: 'VND', viewValue: 'VND' },
+    { value: 'VUV', viewValue: 'VUV' },
+    { value: 'WST', viewValue: 'WST' },
+    { value: 'XAF', viewValue: 'XAF' },
+    { value: 'XAG', viewValue: 'XAG' },
+    { value: 'XAU', viewValue: 'XAU' },
+    { value: 'XCD', viewValue: 'XCD' },
+    { value: 'XDR', viewValue: 'XDR' },
+    { value: 'XOF', viewValue: 'XOF' },
+    { value: 'XPF', viewValue: 'XPF' },
+    { value: 'YER', viewValue: 'YER' },
+    { value: 'ZAR', viewValue: 'ZAR' },
+    { value: 'ZMK', viewValue: 'ZMK' },
+    { value: 'ZMW', viewValue: 'ZMW' },
+    { value: 'ZWL', viewValue: 'ZWL' },
+  ];
 
-  ngOnInit(): void {
-  }
+  constructor(private exchangeRateService: ExchangeRatesService) {}
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
+  onFromChange = (event: MatSelect) => {
+    console.log(event);
+  };
+
+  onToChange = (event: MatSelect) => {
+    console.log(event);
+  };
+
+  onAmountChange = (event: number) => {
+    console.log({ event });
+  };
+
+  ngOnDestroy = () => {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  };
 }

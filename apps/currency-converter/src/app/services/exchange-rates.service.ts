@@ -14,7 +14,13 @@ export class ExchangeRatesService {
 
   constructor(private http: HttpClient) {}
 
-  get histricalRates(): Observable<ExchangeRate> {
+  get historicalRates(): Observable<ExchangeRate> {
+    return this.http
+      .get<ExchangeRate>(`${this.url}latest${this.apiKey}`)
+      .pipe(map((data: ExchangeRate) => data));
+  }
+
+  get latestRates(): Observable<ExchangeRate> {
     return this.http
       .get<ExchangeRate>(`${this.url}latest${this.apiKey}`)
       .pipe(map((data: ExchangeRate) => data));

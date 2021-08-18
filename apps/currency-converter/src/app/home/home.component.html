@@ -21,20 +21,9 @@
         Base Currency: {{exchangeRate?.base}}
       </p>
       <p>
-        Top five Exchange Rates:
+        Last updated: {{baseTime}}
       </p>
-      <!-- <mat-list>
-        {{exchangeRate?.base}}
-        <mat-list-item *ngFor="let r of rates | keyvalue">
-          {{r.key}}{{r.value}}
-          <h3 matLine></h3>
-        </mat-list-item>
-      </mat-list> -->
     </mat-card-content>
-    <mat-card-actions>
-      <mat-divider></mat-divider>
-      <button mat-button>Exchange Rates</button>
-    </mat-card-actions>
-  </mat-card>
 
+  </mat-card>
 </div>
