@@ -74,6 +74,7 @@ const MATERIAL = [
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      // used to define the appearance of mat-form-fields
       useValue: { appearance: 'fill' },
     },
   ],

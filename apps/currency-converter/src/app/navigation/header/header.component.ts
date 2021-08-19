@@ -1,8 +1,7 @@
-/* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-header',
+  selector: 'nwm-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

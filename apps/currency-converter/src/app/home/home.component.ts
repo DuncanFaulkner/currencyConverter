@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ExchangeRate, Rates } from '@nwm/models';
+import { ExchangeRate } from '@nwm/models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ExchangeRatesService } from '../services/exchange-rates.service';
@@ -12,10 +12,16 @@ import { ExchangeRatesService } from '../services/exchange-rates.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   exchangeRate!: ExchangeRate;
-  rates!: Rates;
   baseTime!: Date;
 
+  /**
+   * constructor
+   * @param exchangeRateService
+   */
   constructor(private exchangeRateService: ExchangeRatesService) {}
+  /**
+   *variable to keep track of subscriptions
+   */
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
@@ -25,12 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (data: ExchangeRate) => {
           this.exchangeRate = data;
           this.baseTime = new Date(this.exchangeRate.timestamp * 1000);
-          this.rates = data.rates;
-          console.log(this.rates);
         },
       });
   }
 
+  /**
+   * unsubscribe from subscriptions
+   */
   ngOnDestroy = () => {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

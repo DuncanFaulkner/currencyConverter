@@ -9,20 +9,33 @@ import { map } from 'rxjs/operators';
 })
 export class ExchangeRatesService {
   apiKey = '?access_key=2a8909b3c7544e577f43b4988aea0647';
-
   url = 'http://data.fixer.io/api/';
 
+  /**
+   * constructor
+   * @param http
+   */
   constructor(private http: HttpClient) {}
 
+  /**
+   * get the historical data
+   */
   get historicalRates(): Observable<ExchangeRate> {
     return this.http
       .get<ExchangeRate>(`${this.url}latest${this.apiKey}`)
       .pipe(map((data: ExchangeRate) => data));
   }
 
-  get latestRates(): Observable<ExchangeRate> {
+  /**
+   * get the latest data
+   * @param currencySymbols
+   * @returns
+   */
+  latestRates(currencySymbols: string): Observable<ExchangeRate> {
     return this.http
-      .get<ExchangeRate>(`${this.url}latest${this.apiKey}`)
+      .get<ExchangeRate>(
+        `${this.url}latest${this.apiKey}&symbols=${currencySymbols}`
+      )
       .pipe(map((data: ExchangeRate) => data));
   }
 }

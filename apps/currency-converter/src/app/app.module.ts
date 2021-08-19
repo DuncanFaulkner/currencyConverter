@@ -11,6 +11,9 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { MaterialModule } from './shared/material.module';
 
+/**
+ * route configuration
+ */
 const routes: Routes = [
   {
     path: 'home',

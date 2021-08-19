@@ -11,40 +11,46 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div fxLayout="row" fxLayoutGap="100px">
-        <div fxLayoutAlign="start center">
-          <mat-form-field>
-            <mat-label>Amount</mat-label>
-            <input type="number" [ngModel]="amount" (ngModelChange)="onAmountChange($event)" matInput>
-            <span matPrefix>
-              <mat-icon>attach_money</mat-icon>
-            </span>
-          </mat-form-field>
+      <form #currencyConverter="ngForm">
+        <div fxLayout="row" fxLayoutGap="100px">
+          <div fxLayoutAlign="start center">
+            <mat-form-field>
+              <mat-label>From</mat-label>
+              <mat-select [(ngModel)]="from" name="from">
+                <mat-option *ngFor="let c of countries" [value]="c.value">{{c.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayoutAlign="start center">
+            <mat-form-field>
+              <mat-label>Amount</mat-label>
+              <input type="number" name="amount" [(ngModel)]="amount" matInput>
+            </mat-form-field>
+          </div>
+          <div fxLayoutAlign="end center">
+            <mat-form-field>
+              <mat-label>To</mat-label>
+              <mat-select [(ngModel)]="to" name="to">
+                <mat-option *ngFor="let c of countries" [value]="c.value">{{c.viewValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
-        <div fxLayoutAlign="start center">
-          <mat-form-field>
-            <mat-label>From</mat-label>
-            <mat-select [ngModel]="from" (ngModelChange)="onFromChange($event)">
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let c of countries" [value]="c.value">{{c.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div *ngIf="conversion">
+          {{amount}} {{from }} =
+          <div>
+            Exchange rate: {{rate}}
+          </div>
+          <div class="conversion">
+            {{conversion}}
+          </div>
         </div>
-        <div fxLayoutAlign="end center">
-          <mat-form-field>
-            <mat-label>To</mat-label>
-            <mat-select [ngModel]="to" (ngModelChange)="onToChange($event)">
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let c of countries" [value]="c.value">{{c.viewValue}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+      </form>
     </mat-card-content>
     <mat-card-actions>
       <mat-divider></mat-divider>
-      <button mat-button>Convert</button>
+      <button type="submit" mat-button (click)="onSubmit(currencyConverter)">Convert</button>
     </mat-card-actions>
   </mat-card>
 </div>

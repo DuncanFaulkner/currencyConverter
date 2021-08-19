@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { MatSelect } from '@angular/material/select';
+import { NgForm } from '@angular/forms';
+import { Country, ExchangeRate, Rates } from '@nwm/models';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ExchangeRatesService } from '../services/exchange-rates.service';
 
-interface Country {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'nwm-exchange',
   templateUrl: './exchange.component.html',
@@ -16,6 +14,10 @@ export class ExchangeComponent {
   from = '';
   to = '';
   amount = 0;
+  exchangeRate!: ExchangeRate;
+  rates!: Rates;
+  conversion = '';
+  rate = 0;
 
   countries: Country[] = [
     { value: 'AED', viewValue: 'AED' },
@@ -191,17 +193,18 @@ export class ExchangeComponent {
   constructor(private exchangeRateService: ExchangeRatesService) {}
   private unsubscribe$: Subject<void> = new Subject<void>();
 
-  onFromChange = (event: MatSelect) => {
-    console.log(event);
-  };
-
-  onToChange = (event: MatSelect) => {
-    console.log(event);
-  };
-
-  onAmountChange = (event: number) => {
-    console.log({ event });
-  };
+  onSubmit(selectedRates: NgForm) {
+    const { amount, from } = selectedRates.value;
+    this.exchangeRateService
+      .latestRates(`${from}`)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (data: ExchangeRate) => {
+          Object.values(data.rates).map((k) => (this.rate = k));
+          this.conversion = (amount / this.rate).toFixed(6);
+        },
+      });
+  }
 
   ngOnDestroy = () => {
     this.unsubscribe$.next();

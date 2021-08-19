@@ -1,3 +1,6 @@
+/**
+ * interface for the country exchange rate
+ */
 export interface Rates {
   AED: number;
   AFN: number;
@@ -169,10 +172,22 @@ export interface Rates {
   ZWL: number;
 }
 
+/**
+ * interface for the exchange rate
+ */
 export interface ExchangeRate {
   success: boolean;
   timestamp: number;
   base: string;
   date: string;
   rates: Rates;
+}
+
+/**
+ * interface for storing the
+ * country codes for the drop downs
+ */
+export interface Country {
+  value: string;
+  viewValue: string;
 }

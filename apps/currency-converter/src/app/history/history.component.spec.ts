@@ -1,5 +1,6 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatCardModule } from '@angular/material/card';
 import { HistoryComponent } from './history.component';
 
 describe('HistoryComponent', () => {
@@ -8,9 +9,10 @@ describe('HistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HistoryComponent ]
-    })
-    .compileComponents();
+      imports: [MatCardModule],
+      declarations: [HistoryComponent],
+      providers: [HttpClient, HttpHandler],
+    }).compileComponents();
   });
 
   beforeEach(() => {
