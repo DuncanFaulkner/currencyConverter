@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExchangeComponent } from './exchange.component';
 
-describe('ExchangeComponent', () => {
+describe(ExchangeComponent.name, () => {
   let component: ExchangeComponent;
   let fixture: ComponentFixture<ExchangeComponent>;
 

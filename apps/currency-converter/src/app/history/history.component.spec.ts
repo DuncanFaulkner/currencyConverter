@@ -1,15 +1,16 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { HistoryComponent } from './history.component';
 
-describe('HistoryComponent', () => {
+describe(HistoryComponent.name, () => {
   let component: HistoryComponent;
   let fixture: ComponentFixture<HistoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatCardModule],
+      imports: [MatCardModule, MatIconModule],
       declarations: [HistoryComponent],
       providers: [HttpClient, HttpHandler],
     }).compileComponents();
@@ -23,5 +24,16 @@ describe('HistoryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a card title', () => {
+    const cards = Array.from(document.getElementsByTagName('mat-card'));
+    cards.forEach((card) => {
+      const title = card
+        .getElementsByTagName('mat-card-title')[0]
+        .textContent?.trim();
+
+      expect(title).toEqual('Historical Currency Exchange Rates');
+    });
   });
 });

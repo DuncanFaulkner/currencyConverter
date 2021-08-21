@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home.component';
 
-describe('HomeComponent', () => {
+describe(HomeComponent.name, () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
@@ -25,5 +25,16 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a card title', () => {
+    const cards = Array.from(document.getElementsByTagName('mat-card'));
+    cards.forEach((card) => {
+      const title = card
+        .getElementsByTagName('mat-card-title')[0]
+        .textContent?.trim();
+
+      expect(title).toEqual('Currency Exchange Converter');
+    });
   });
 });

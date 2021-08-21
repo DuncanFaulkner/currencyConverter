@@ -30,6 +30,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (data: ExchangeRate) => {
+          this.baseTime = new Date(data.timestamp * 1000);
           this.exchangeRate = data.rates;
         },
       });
