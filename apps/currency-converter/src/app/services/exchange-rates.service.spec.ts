@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
@@ -36,7 +37,7 @@ fdescribe(ExchangeRatesService.name, () => {
 
     beforeEach(() => {
       http = new HttpClientMock();
-      service = new ExchangeRatesService(http as unknown as HttpClient);
+      service = new ExchangeRatesService(http as any);
     });
 
     describe('historicalRates', () => {
@@ -64,7 +65,7 @@ fdescribe(ExchangeRatesService.name, () => {
         expect(http.lastHttpMethod).toBe('GET');
       });
 
-      it('returns exhange rate data', async () => {
+      it('returns exhange base rate', async () => {
         // arrange
         http.response = { base: 'EUR' };
 
@@ -101,7 +102,7 @@ fdescribe(ExchangeRatesService.name, () => {
         expect(http.lastHttpMethod).toBe('GET');
       });
 
-      it('returns exhange rate data', async () => {
+      it('returns exhange base rate', async () => {
         // arrange
         http.response = { base: 'EUR' };
 

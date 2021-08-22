@@ -12,7 +12,7 @@
     </mat-card-header>
     <mat-card-content>
       <form #currencyConverter="ngForm">
-        <div fxLayout="row" fxLayoutGap="100px">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
           <div fxLayoutAlign="start center">
             <mat-form-field>
               <mat-label>From</mat-label>
@@ -28,7 +28,7 @@
               <input type="number" name="amount" [(ngModel)]="amount" matInput>
             </mat-form-field>
           </div>
-          <div fxLayoutAlign="end center">
+          <div fxLayoutAlign="end center" fxLayoutAlign.lt-md="start center">
             <mat-form-field>
               <mat-label>To</mat-label>
               <mat-select [(ngModel)]="to" name="to">
